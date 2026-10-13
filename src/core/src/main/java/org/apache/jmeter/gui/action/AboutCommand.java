@@ -61,7 +61,7 @@ public class AboutCommand extends AbstractAction {
     }
 
     /**
-     * Handle the "about" action by displaying the "About Apache JMeter..."
+     * Handle the "about" action by displaying the "About Anvil..."
      * dialog box. The Dialog Box is NOT modal, because those should be avoided
      * if at all possible.
      */
@@ -105,7 +105,7 @@ public class AboutCommand extends AbstractAction {
         if (about != null) {
             return about;
         }
-        about = new EscapeDialog(mainFrame, "About Apache JMeter", false);
+        about = new EscapeDialog(mainFrame, "About Anvil", false);
         about.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -113,10 +113,11 @@ public class AboutCommand extends AbstractAction {
             }
         });
 
+        JLabel version = new JLabel(versionLine(), SwingConstants.CENTER);
         JLabel copyright = new JLabel(JMeterUtils.getJMeterCopyright(), SwingConstants.CENTER);
-        JLabel rights = new JLabel("All Rights Reserved.", SwingConstants.CENTER);
-        JLabel version = new JLabel("Apache JMeter Version " + JMeterUtils.getJMeterVersion(), SwingConstants.CENTER);
-        JLabel releaseNotes = new JLabel("<html><a href=\"https://jmeter.apache.org/changes.html\">Release notes</a></html>", SwingConstants.CENTER);
+        JLabel affiliation = new JLabel("Anvil is not affiliated with or endorsed by the Apache Software Foundation.", SwingConstants.CENTER);
+        JLabel releaseNotes = new JLabel("<html><a href=\"https://jmeter.apache.org/changes.html\">Upstream JMeter release notes</a></html>",
+                SwingConstants.CENTER);
         releaseNotes.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         releaseNotes.addMouseListener(new MouseAdapter() {
             @Override
@@ -131,9 +132,9 @@ public class AboutCommand extends AbstractAction {
         infos.setOpaque(false);
         infos.setLayout(new GridLayout(0, 1));
         infos.setBorder(new EmptyBorder(5, 5, 5, 5));
-        infos.add(copyright);
-        infos.add(rights);
         infos.add(version);
+        infos.add(copyright);
+        infos.add(affiliation);
         infos.add(releaseNotes);
         Container panel = about.getContentPane();
         panel.setLayout(new BorderLayout());
@@ -141,5 +142,13 @@ public class AboutCommand extends AbstractAction {
         panel.add(infos, BorderLayout.SOUTH);
         about.pack();
         return about;
+    }
+
+    /**
+     * @return version line, for example {@code Anvil 0.1.0, based on Apache JMeter 6.0.0}
+     */
+    static String versionLine() {
+        return "Anvil " + JMeterUtils.getAnvilVersion()
+                + ", based on Apache JMeter " + JMeterUtils.getJMeterBaseVersion();
     }
 }

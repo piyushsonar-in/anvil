@@ -46,7 +46,7 @@ rem Change to script directory
 pushd %~dp1
 
 rem use same directory to find jmeter script
-call "%~dp0"jmeter -n -t "%~nx1" -j "%~n1.log" -l "%~n1.jtl" %2 %3 %4 %5 %6 %7 %8 %9
+call "%~dp0"anvil -n -t "%~nx1" -j "%~n1.log" -l "%~n1.jtl" %2 %3 %4 %5 %6 %7 %8 %9
 
 popd
 

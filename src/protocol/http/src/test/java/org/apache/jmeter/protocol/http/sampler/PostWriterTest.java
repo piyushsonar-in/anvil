@@ -48,6 +48,7 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@SuppressWarnings("deprecation")
 public class PostWriterTest {
 
     private static final Logger log = LoggerFactory.getLogger(PostWriterTest.class);

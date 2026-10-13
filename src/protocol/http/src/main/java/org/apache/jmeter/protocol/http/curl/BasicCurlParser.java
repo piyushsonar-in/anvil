@@ -679,6 +679,8 @@ public class BasicCurlParser {
         super();
     }
 
+    // URL constructors are deprecated since Java 20; kept for identical URL parsing
+    @SuppressWarnings("deprecation")
     public Request parse(String commandLine) {
         String[] args = translateCommandline(commandLine);
         CLArgsParser parser = new CLArgsParser(args, OPTIONS);
@@ -1074,6 +1076,7 @@ public class BasicCurlParser {
      * @param url to extract domain and path for the cookie from
      * @return list of cookies
      */
+   @SuppressWarnings("deprecation")
    public static List<Cookie> stringToCookie(String cookieStr, String url) {
        List<Cookie> cookies = new ArrayList<>();
        final StringTokenizer tok = new StringTokenizer(cookieStr, "; ", true);

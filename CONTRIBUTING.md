@@ -1,6 +1,31 @@
 # How to contribute
 
-Want to show Apache JMeter some love? Help out by contributing!
+Want to show Anvil some love? Help out by contributing!
+
+## Clean-room rule
+
+Anvil is written fresh on top of upstream Apache JMeter. The `breaktest` fork
+(https://github.com/Breaking-IT/breaktest) may be read as a design reference, but:
+
+* Do not copy, paste, cherry-pick or port code, tests, resources or docs from breaktest.
+  Write the change yourself from upstream JMeter.
+* Do not push `breaktest/*` branches or tags to this repository.
+* Every pull request confirms this with the "No code copied from breaktest" checkbox.
+  Reviewers ask about any change that looks lifted.
+
+## License and contributor agreement
+
+Anvil's own code is licensed under the [Anvil Community Source License 1.0](LICENSE).
+Upstream Apache JMeter files keep the Apache License, Version 2.0 and their ASF header.
+
+* Contributions are accepted under the [Anvil Contributor License Agreement](CONTRIBUTOR_LICENSE_AGREEMENT.md).
+  Tick the CLA checkbox in your pull request to accept it.
+* A new file written for Anvil gets the Anvil header (see `MainFrameTitleTest.kt`) and an
+  entry in `config/anvil-licensed-files.txt`, so the style check expects that header.
+* When you change an Apache JMeter file, keep its ASF header.
+
+Bug reports and fixes that also apply to Apache JMeter are best sent
+[upstream](https://github.com/apache/jmeter) first; the weekly sync brings them in.
 
 ## :beetle: Found a bug
 
@@ -54,7 +79,7 @@ The steps to import the sources (based on Eclipse 2019-06) into Eclipse are as f
 
 1. Install `Eclipse IDE for Java Developers`
 1. Install `Kotlin for Eclipse` plugin (JMeter code uses Java and Kotlin)
-1. Make sure you have a Java 17 compatible JDK configured in your workspace
+1. Make sure you have a Java 21 compatible JDK configured in your workspace
 1. Open `File->Import...`
 1. Select `Existing Gradle Project` and click `Next`
 1. Read `How to experience the best Gradle integration` and click `Next`

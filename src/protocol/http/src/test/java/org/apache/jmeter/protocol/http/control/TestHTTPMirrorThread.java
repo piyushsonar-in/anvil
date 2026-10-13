@@ -38,6 +38,7 @@ import org.junit.jupiter.api.extension.RegisterExtension;
  * Class for testing the HTTPMirrorThread, which is handling the
  * incoming requests for the HTTPMirrorServer
  */
+@SuppressWarnings("deprecation")
 public class TestHTTPMirrorThread extends JMeterTestCase {
     /** The encodings used for http headers and control information */
     private static final String ISO_8859_1 = "ISO-8859-1"; // $NON-NLS-1$

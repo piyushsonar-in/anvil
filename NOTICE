@@ -1,5 +1,21 @@
+Anvil
+Copyright (c) 2026 Piyush Sonar
+
+Anvil-specific material is licensed under the Anvil Community Source
+License 1.0 unless a file or component says otherwise. See LICENSE.
+
+Anvil is based on Apache JMeter (https://jmeter.apache.org/). Files that
+carry the Apache Software Foundation license header are Apache JMeter files,
+licensed under the Apache License, Version 2.0 (see LICENSE-APACHE-2.0).
+Anvil has modified some of them; the git history records each change.
+
 Apache JMeter
 Copyright 1998-2024 The Apache Software Foundation
 
 This product includes software developed at
 The Apache Software Foundation (http://www.apache.org/).
+
+Anvil is not affiliated with, endorsed by, or sponsored by
+The Apache Software Foundation. "Apache", "Apache JMeter" and "JMeter"
+are trademarks of The Apache Software Foundation and are used here only
+to describe where the code comes from.

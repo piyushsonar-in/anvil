@@ -472,7 +472,8 @@ val previewSite by tasks.registering(Sync::class) {
 }
 
 val distributionGroup = "distribution"
-val baseFolder = "apache-jmeter-${rootProject.version}"
+val anvilVersion: String by rootProject.extra
+val baseFolder = "anvil-$anvilVersion"
 
 fun CopySpec.javadocs() = from(javadocAggregate)
 
@@ -481,7 +482,18 @@ fun CopySpec.excludeLicenseFromSourceRelease() {
     // It is populated by "dependencyLicenses" above,
     // so we ignore the folder when building source releases
     exclude("licenses/**")
-    exclude("LICENSE")
+    exclude("LICENSE-APACHE-2.0")
+}
+
+// The generated Apache-2.0 + third-party license is shipped next to the Anvil LICENSE
+fun CopySpec.licensesWithApacheAsSeparateFile(licenses: Configuration) {
+    from(files(licenses)) {
+        exclude("LICENSE")
+    }
+    from(files(licenses)) {
+        include("LICENSE")
+        rename { "LICENSE-APACHE-2.0" }
+    }
 }
 
 fun CrLfSpec.binaryLayout() = copySpec {
@@ -490,11 +502,12 @@ fun CrLfSpec.binaryLayout() = copySpec {
         // Note: license content is taken from "/build/..", so gitignore should not be used
         // Note: this is a "license + third-party licenses", not just Apache-2.0
         // Note: files(...) adds both "files" and "dependency"
-        from(files(binLicense))
+        licensesWithApacheAsSeparateFile(binLicense)
         from(rootDir) {
             gitignore(gitProps)
             exclude("bin/testfiles")
             exclude("bin/rmi_keystore.jks")
+            include("LICENSE")
             include("bin/**")
             include("lib/ext/**")
             include("lib/junit/**")
@@ -530,7 +543,7 @@ fun CrLfSpec.sourceLayout() = copySpec {
         // Note: license content is taken from "/build/..", so gitignore should not be used
         // Note: this is a "license + third-party licenses", not just Apache-2.0
         // Note: files(...) adds both "files" and "dependency"
-        from(files(srcLicense))
+        licensesWithApacheAsSeparateFile(srcLicense)
         // Include all the source files
         from(rootDir) {
             gitignore(gitProps)
@@ -581,9 +594,9 @@ for (type in listOf("binary", "source")) {
             // So we add a custom property to re-execute the task in case attributes change
             inputs.property("gitproperties", gitProps.map { it.props.attrs.toString() })
 
-            // Gradle defaults to the following pattern, and JMeter was using apache-jmeter-5.1_src.zip
+            // Gradle defaults to the following pattern, and we want anvil-0.1.0_src.zip
             // [baseName]-[appendix]-[version]-[classifier].[extension]
-            archiveBaseName.set("apache-jmeter-${rootProject.version}${if (type == "source") "_src" else ""}")
+            archiveBaseName.set("$baseFolder${if (type == "source") "_src" else ""}")
             // Discard project version since we want it to be added before "_src"
             archiveVersion.set("")
             CrLfSpec(eol).run {
@@ -607,7 +620,7 @@ releaseArtifacts {
 
 val runGui by tasks.registering(JavaExec::class) {
     group = "Development"
-    description = "Builds and starts JMeter GUI"
+    description = "Builds and starts Anvil GUI"
     dependsOn(createDist)
     buildParameters.testJdk?.let {
         javaLauncher.set(javaToolchains.launcherFor(it))
@@ -621,8 +634,8 @@ val runGui by tasks.registering(JavaExec::class) {
 
     val osName = System.getProperty("os.name")
     if (osName.contains(Regex("mac os x|darwin|osx", RegexOption.IGNORE_CASE))) {
-        jvmArgs("-Xdock:name=JMeter")
-        jvmArgs("-Xdock:icon=$rootDir/xdocs/images/jmeter_square.png")
+        jvmArgs("-Xdock:name=Anvil")
+        jvmArgs("-Xdock:icon=$rootDir/xdocs/images/anvil_square.png")
         jvmArgs("-Dapple.laf.useScreenMenuBar=true")
         jvmArgs("-Dapple.eawt.quitStrategy=CLOSE_ALL_WINDOWS")
     }
@@ -637,8 +650,8 @@ val runGui by tasks.registering(JavaExec::class) {
     val props = System.getProperties()
     @Suppress("UNCHECKED_CAST")
     for (e in props.propertyNames() as `java.util`.Enumeration<String>) {
-        // Pass -Djmeter.* and -Ddarklaf.* properties to the JMeter process
-        if (e.startsWith("jmeter.") || e.startsWith("darklaf.")) {
+        // Pass -Danvil.*, -Djmeter.* and -Ddarklaf.* properties to the Anvil process
+        if (e.startsWith("anvil.") || e.startsWith("jmeter.") || e.startsWith("darklaf.")) {
             passProperty(e)
         }
         if (e == "darklaf.native") {

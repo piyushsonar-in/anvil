@@ -1,0 +1,6 @@
+# Files written for Anvil and licensed under the Anvil Community Source License 1.0.
+# Autostyle checks these for the Anvil header and every other file for the Apache header.
+# Patterns are Ant-style and must start with **/ so they match from any Gradle project.
+# Root bin/ scripts are not checked by Autostyle; bin/jmeter.bat carries the Anvil header by hand.
+**/org/apache/jmeter/gui/MainFrameTitleTest.kt
+**/org/apache/jmeter/gui/action/AboutCommandTest.kt

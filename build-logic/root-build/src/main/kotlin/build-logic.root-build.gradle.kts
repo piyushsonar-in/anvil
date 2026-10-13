@@ -50,6 +50,13 @@ val rat by tasks.getting(org.nosphere.apache.rat.RatTask::class) {
     verbose.set(true)
     // Note: patterns are in non-standard syntax for RAT, so we use exclude(..) instead of excludeFile
     exclude(rootDir.resolve(".ratignore").readLines())
+    // RAT audits Apache headers only; Anvil-licensed files are checked by Autostyle
+    exclude(
+        rootDir.resolve("config/anvil-licensed-files.txt").readLines()
+            .map { it.trim() }
+            .filter { it.isNotEmpty() && !it.startsWith("#") }
+    )
+    exclude("bin/jmeter.bat")
     // Gradle's validation might assume copyLibs and rat operate on the intersecting set of files
     // Technically speaking, that is false positive since rat ignores *.jar files,
     // and copyLibs copies jar files only

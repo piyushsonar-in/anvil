@@ -30,6 +30,7 @@ import java.util.List;
 import org.apache.jmeter.junit.JMeterTestCase;
 import org.junit.jupiter.api.Test;
 
+@SuppressWarnings("deprecation")
 public class TestCssParser extends JMeterTestCase {
 
     private static final String CSS_IN_ERROR = "@-webkit-keyframes \"introjspulse\"{"

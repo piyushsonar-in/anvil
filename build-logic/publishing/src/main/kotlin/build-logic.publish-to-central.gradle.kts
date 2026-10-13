@@ -83,9 +83,14 @@ publishing {
             url.set("https://jmeter.apache.org/")
             licenses {
                 license {
+                    name.set("Anvil Community Source License 1.0")
+                    url.set("https://github.com/piyushsonar-in/anvil/blob/master/LICENSE")
+                    comments.set("Source-available license for Anvil material")
+                }
+                license {
                     name.set("The Apache License, Version 2.0")
                     url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
-                    comments.set("A business-friendly OSS license")
+                    comments.set("Apache JMeter material")
                 }
             }
             issueManagement {

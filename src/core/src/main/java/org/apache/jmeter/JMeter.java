@@ -382,15 +382,13 @@ public class JMeter implements JMeterPlugin {
 
             Thread.setDefaultUncaughtExceptionHandler(
                     (Thread t, Throwable e) -> {
-                    if (!(e instanceof ThreadDeath)) {
-                        log.error("Uncaught exception in thread {}", t, e);
-                        System.err.println("Uncaught Exception " + e + " in thread " + t + ". See log file for details.");//NOSONAR
-                    }
+                    log.error("Uncaught exception in thread {}", t, e);
+                    System.err.println("Uncaught Exception " + e + " in thread " + t + ". See log file for details.");//NOSONAR
             });
 
             if (log.isInfoEnabled()) {
                 log.info(JMeterUtils.getJMeterCopyright());
-                log.info("Version {}", JMeterUtils.getJMeterVersion());
+                log.info("Anvil {}, JMeter version {}", JMeterUtils.getAnvilVersion(), JMeterUtils.getJMeterVersion());
                 log.info("java.version={}", System.getProperty("java.version"));//$NON-NLS-1$ //$NON-NLS-2$
                 log.info("java.vm.name={}", System.getProperty("java.vm.name"));//$NON-NLS-1$ //$NON-NLS-2$
                 log.info("os.name={}", System.getProperty("os.name"));//$NON-NLS-1$ //$NON-NLS-2$
@@ -547,7 +545,7 @@ public class JMeter implements JMeterPlugin {
     }
 
     /**
-     * Displays as ASCII Art Apache JMeter version + Copyright notice
+     * Displays as ASCII Art Anvil version + Copyright notice
      */
     private static void displayAsciiArt() {
         try (InputStream inputStream = JMeter.class.getResourceAsStream("jmeter_as_ascii_art.txt")) {
@@ -557,7 +555,7 @@ public class JMeter implements JMeterPlugin {
             }
         } catch (Exception e1) { //NOSONAR No logging here
             System.out.println(JMeterUtils.getJMeterCopyright());//NOSONAR
-            System.out.println("Version " + JMeterUtils.getJMeterVersion());//NOSONAR
+            System.out.println("Anvil " + JMeterUtils.getAnvilVersion());//NOSONAR
         }
     }
 

@@ -18,6 +18,7 @@
 package org.apache.jmeter;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -61,10 +62,12 @@ public class SplashScreen extends JDialog {
     }
 
     public static JComponent loadLogo() {
-        JLabel logo = new JLabel();
-        logo.setBorder(new EmptyBorder(10, 10, 10, 10));
+        JLabel logo = new JLabel("Anvil"); // $NON-NLS-1$
+        logo.setBorder(new EmptyBorder(24, 32, 24, 48));
+        logo.setFont(logo.getFont().deriveFont(Font.BOLD, 96f));
+        logo.setIconTextGap(24);
         URI svgUri = null;
-        String svgResourcePath = "/org/apache/jmeter/images/logo.svg";
+        String svgResourcePath = "/org/apache/jmeter/images/anvil-logo.svg";
         try {
             URL svgUrl = JMeterUtils.class.getResource(svgResourcePath);
             if (svgUrl != null) {
@@ -73,17 +76,9 @@ public class SplashScreen extends JDialog {
         } catch (URISyntaxException e) {
             log.warn("Unable to find logo {}", svgResourcePath, e);
         }
-
         if (svgUri != null) {
-            Icon icon = new ThemedSVGIcon(svgUri, 521, 177);
+            Icon icon = new ThemedSVGIcon(svgUri, 128, 128);
             logo.setIcon(icon);
-        } else {
-            // Fallback logo
-            logo.setText("<html>" +
-                    "<span style=\"font-size:36px;font-family:'Lucida Grande',Corbel,Arial;color:#D11123\">&nbsp;&nbsp;APACHE<br></span>" +
-                    "<span style=\"font-size:100px;font-family:'Lucida Grande',Corbel,Arial;font-weight:bold\">" +
-                    "<span style=\"color:#D11123\">J</span>Meter" +
-                    "<span style=\"color:#4d4d4d\">™</span></span></html>");
         }
         return logo;
     }

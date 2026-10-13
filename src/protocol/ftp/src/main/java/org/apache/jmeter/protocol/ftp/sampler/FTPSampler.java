@@ -167,6 +167,8 @@ public class FTPSampler extends AbstractSampler implements Interruptible {
         return sb.toString();
     }
 
+    // URL constructors are deprecated since Java 20; kept for identical URL parsing
+    @SuppressWarnings("deprecation")
     @Override
     public SampleResult sample(Entry e) {
         SampleResult res = new SampleResult();

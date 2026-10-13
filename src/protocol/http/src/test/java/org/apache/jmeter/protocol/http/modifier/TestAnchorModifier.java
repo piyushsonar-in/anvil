@@ -39,6 +39,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+@SuppressWarnings("deprecation")
 public class TestAnchorModifier extends JMeterTestCase {
 
     private AnchorModifier parser = new AnchorModifier();

@@ -197,9 +197,9 @@ public class JMeterUtils implements UnitTestManager {
         if (loc != null) {
             String []parts = JOrphanUtils.split(loc,"_");// $NON-NLS-1$
             if (parts.length==2) {
-                setLocale(new Locale(parts[0], parts[1]));
+                setLocale(Locale.of(parts[0], parts[1]));
             } else {
-                setLocale(new Locale(loc, "")); // $NON-NLS-1$
+                setLocale(Locale.of(loc)); // $NON-NLS-1$
             }
         } else {
             setLocale(Locale.getDefault());
@@ -1155,6 +1155,24 @@ public class JMeterUtils implements UnitTestManager {
     }
 
     /**
+     * Gets the Anvil product version shown to users.
+     *
+     * @return the Anvil version string, for example {@code 0.1.0}
+     */
+    public static String getAnvilVersion() {
+        return JMeterVersion.getAnvilVersion();
+    }
+
+    /**
+     * Gets the upstream Apache JMeter release this build is based on.
+     *
+     * @return the JMeter release, for example {@code 6.0.0}
+     */
+    public static String getJMeterBaseVersion() {
+        return JMeterVersion.getJMeterBaseVersion();
+    }
+
+    /**
      * Gets the JMeter copyright.
      *
      * @return the JMeter copyright string
@@ -1298,11 +1316,10 @@ public class JMeterUtils implements UnitTestManager {
     }
 
     /**
-     * Help GC by triggering GC and finalization
+     * Help GC by triggering GC
      */
     public static void helpGC() {
         System.gc(); // NOSONAR Intentional
-        System.runFinalization();
     }
 
     /**

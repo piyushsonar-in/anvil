@@ -16,7 +16,7 @@
 # limitations under the License.
 #
 
-## This is a simple wrapper for the script bin/jmeter
+## This is a simple wrapper for the script bin/anvil
 ##
 ## Basic JMeter startup script for Un*x systems
 ## See the "jmeter" script for details of options that can be used for Sun JVMs
@@ -89,8 +89,8 @@ fi
 #--add-opens if JAVA 9
 JAVA9_OPTS=
 
-# Minimal version to run JMeter
-MINIMAL_VERSION=17
+# Minimal Java major version to run Anvil
+MINIMAL_VERSION=21
 
 # Check if version is from OpenJDK or Oracle Hotspot JVM prior to 9 containing 1.${version}.x
 CURRENT_VERSION=`"${JAVA_HOME}/bin/java" -version 2>&1 | awk -F'"' '/version/ {gsub("^1[.]", "", $2); gsub("[^0-9].*$", "", $2); print $2}'`
@@ -99,7 +99,7 @@ CURRENT_VERSION=`"${JAVA_HOME}/bin/java" -version 2>&1 | awk -F'"' '/version/ {g
 if [ "$CURRENT_VERSION" -ge "$MINIMAL_VERSION" ]; then
     JAVA9_OPTS="--add-opens java.desktop/sun.awt=ALL-UNNAMED --add-opens java.desktop/sun.swing=ALL-UNNAMED --add-opens java.desktop/javax.swing.text.html=ALL-UNNAMED --add-opens java.desktop/java.awt=ALL-UNNAMED --add-opens java.desktop/java.awt.font=ALL-UNNAMED --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang.invoke=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.text=ALL-UNNAMED --add-opens=java.desktop/sun.awt.X11=ALL-UNNAMED --add-opens=java.desktop/sun.awt.shell=ALL-UNNAMED"
 else
-    echo "JMeter requires Java $MINIMAL_VERSION or later. Current Java version is $CURRENT_VERSION"
+    echo "Anvil needs Java $MINIMAL_VERSION or newer, found $CURRENT_VERSION. Download Java $MINIMAL_VERSION: https://adoptium.net/temurin/releases/?version=$MINIMAL_VERSION"
     exit 1
 fi
 
@@ -110,4 +110,4 @@ JMETER_COMPLETE_ARGS=true
 JVM_ARGS="$JAVA9_OPTS $JVM_ARGS"
 export JVM_ARGS JMETER_COMPLETE_ARGS
 
-"${PRGDIR}/jmeter" "$@"
+"${PRGDIR}/anvil" "$@"

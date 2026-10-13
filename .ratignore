@@ -6,6 +6,11 @@ gradle/verification-metadata.xml
 AGENTS.md
 CODE_OF_CONDUCT.md
 CONTRIBUTING.md
+CONTRIBUTOR_LICENSE_AGREEMENT.md
+LICENSE
+LICENSE-APACHE-2.0
+TASKS.ai.md
+config/anvil-licensed-files.txt
 eclipse.md
 gradle.md
 ISSUE_TEMPLATE.md

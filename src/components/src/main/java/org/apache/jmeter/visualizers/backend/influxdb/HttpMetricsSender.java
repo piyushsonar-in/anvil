@@ -96,6 +96,8 @@ class HttpMetricsSender extends AbstractInfluxdbMetricsSender {
      * @param influxDBToken example: my-token
      * @see InfluxdbMetricsSender#setup(String, String)
      */
+    // URL constructors are deprecated since Java 20; kept for identical URL parsing
+    @SuppressWarnings("deprecation")
     @Override
     public void setup(String influxdbUrl, String influxDBToken) throws Exception {
         // Create I/O reactor configuration

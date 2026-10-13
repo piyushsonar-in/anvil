@@ -26,6 +26,7 @@ import java.net.URI
 import java.net.URL
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@Suppress("DEPRECATION")
 class HTTPUtilsTest {
     data class GetEncodingFromContentTypeCase(val contentType: String, val expectedEncoding: String?)
 

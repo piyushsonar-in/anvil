@@ -31,6 +31,7 @@ import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+@SuppressWarnings("deprecation")
 public class TestAuthManager extends JMeterTestCase {
 
     @Test

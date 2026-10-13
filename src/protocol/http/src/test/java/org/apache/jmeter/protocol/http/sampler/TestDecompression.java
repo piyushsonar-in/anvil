@@ -41,6 +41,7 @@ import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 
 import kotlin.text.StringsKt;
 
+@SuppressWarnings("deprecation")
 public class TestDecompression {
     enum ClientGzip {
         REQUESTED, NOT_REQUESTED
