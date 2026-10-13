@@ -245,6 +245,8 @@ public class HTTPHC4Impl extends HTTPHCAbstractImpl {
          * @param authScope information which destination we want to get credentials for
          * @return matching authorization information entry from the AuthManager
          */
+        // URL constructors are deprecated since Java 20; kept for identical URL parsing
+        @SuppressWarnings("deprecation")
         private Authorization getAuthorizationForAuthScope(AuthScope authScope) {
             if (authScope == null) {
                 return null;
@@ -286,6 +288,7 @@ public class HTTPHC4Impl extends HTTPHCAbstractImpl {
     }
 
     private static final class PreemptiveAuthRequestInterceptor implements HttpRequestInterceptor {
+        @SuppressWarnings("deprecation")
         @Override
         public void process(HttpRequest request, HttpContext context) throws HttpException, IOException {
             HttpClientContext localContext = HttpClientContext.adapt(context);
@@ -591,6 +594,7 @@ public class HTTPHC4Impl extends HTTPHCAbstractImpl {
         }
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     protected HTTPSampleResult sample(URL url, String method,
             boolean areFollowingRedirect, int frameDepth) {
@@ -911,6 +915,8 @@ public class HTTPHC4Impl extends HTTPHCAbstractImpl {
      * @return the result of the execution of the httpRequest
      * @throws IOException
      */
+    // Subject.callAs wraps failures in CompletionException rather than PrivilegedActionException; keep doAs
+    @SuppressWarnings("removal")
     private CloseableHttpResponse executeRequest(final CloseableHttpClient httpClient,
             final HttpRequestBase httpRequest, final HttpContext localContext, final URL url)
             throws IOException {

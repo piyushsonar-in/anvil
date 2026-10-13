@@ -39,6 +39,7 @@ import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import com.github.tomakehurst.wiremock.http.RequestMethod;
 import com.github.tomakehurst.wiremock.matching.RequestPatternBuilder;
 
+@SuppressWarnings("deprecation")
 class TestRedirects {
 
     public static List<Arguments> redirectionParams() {

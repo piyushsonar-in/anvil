@@ -27,6 +27,7 @@ import java.util.Properties;
  * URLConnection for junit tests.
  *
  */
+@SuppressWarnings("deprecation")
 public final class NullURLConnection extends URLConnection {
 
     private final Properties data = new Properties();

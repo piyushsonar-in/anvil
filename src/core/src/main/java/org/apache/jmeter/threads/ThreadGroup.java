@@ -248,7 +248,7 @@ public class ThreadGroup extends AbstractThreadGroup {
                             (perThreadDelayInMillis - timeElapsedToStartLastThread));
                 }
                 if (log.isDebugEnabled()) {
-                    log.debug("Computed delayForNextThreadInMillis:{} for thread:{}", delayForNextThreadInMillis, Thread.currentThread().getId());
+                    log.debug("Computed delayForNextThreadInMillis:{} for thread:{}", delayForNextThreadInMillis, Thread.currentThread().threadId());
                 }
                 lastThreadStartInMillis = nowInMillis;
                 startNewThread(notifier, threadGroupTree, engine, threadNum, variables, nowInMillis, Math.max(0, delayForNextThreadInMillis));

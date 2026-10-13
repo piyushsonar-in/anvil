@@ -56,6 +56,7 @@ import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
 
 @Isolated
+@SuppressWarnings("deprecation")
 public class TestHTMLParser extends JMeterTestCase {
     private static final Logger log = LoggerFactory.getLogger(TestHTMLParser.class);
 

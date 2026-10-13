@@ -57,6 +57,7 @@ import com.github.benmanes.caffeine.cache.Cache;
 /**
  * Test {@link CacheManager} that uses HTTPHC4Impl
  */
+@SuppressWarnings("deprecation")
 public class TestCacheManagerThreadIteration {
     private JMeterContext jmctx;
     private JMeterVariables jmvars;

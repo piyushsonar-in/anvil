@@ -41,6 +41,7 @@ import org.junit.jupiter.api.Test;
 /**
  * HC4CookieHandler tests
  */
+@SuppressWarnings("deprecation")
 public class TestHC4CookieManager extends JMeterTestCase {
 
     private CookieManager man = null;

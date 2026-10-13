@@ -28,13 +28,12 @@ matrix.addAxis({
   ]
 });
 
-const eaJava = '22';
+const eaJava = '27';
 
 matrix.addAxis({
   name: 'java_version',
   // Strings allow versions like 18-ea
   values: [
-    '17',
     '21',
     '25',
     eaJava,
@@ -92,10 +91,6 @@ matrix.exclude({os: 'macos-latest', java_distribution: {value: 'oracle'}})
 // Ignore builds with JAVA EA for now, see https://github.com/apache/jmeter/issues/6114
 matrix.exclude({java_version: eaJava})
 matrix.imply({java_version: eaJava}, {java_distribution: {value: 'oracle'}})
-// Oracle JDK is only supported for JDK 21 and later
-matrix.imply({java_distribution: {value: 'oracle'}}, {java_version: v => v === eaJava || v >= 21});
-// TODO: Semeru does not ship Java 21 builds yet
-matrix.exclude({java_distribution: {value: 'semeru'}, java_version: '21'});
 
 // Drive the whole matrix from one batch of requirements. generateRows guarantees a row for
 // each entry, packs them into as few jobs as it can, and spends the rest of the MATRIX_JOBS
@@ -109,8 +104,8 @@ const include = matrix.generateRows(Number(process.env.MATRIX_JOBS || 5), {
     {os: 'windows-latest'},
     // TODO: un-comment when xvfb will be possible
     // {os: 'ubuntu-latest'},
-    // Ensure there will be at least one job with Java 17
-    {java_version: '17'},
+    // Ensure there will be at least one job with Java 21 (the minimum supported version)
+    {java_version: '21'},
     // Ensure there will be at least one job with Java 25
     {java_version: '25'},
     // Ensure there will be at least one job with Java EA

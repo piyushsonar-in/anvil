@@ -1088,6 +1088,8 @@ public abstract class HTTPSamplerBase extends AbstractSampler
      * @return The URL to be requested by this sampler.
      * @throws MalformedURLException if url is malformed
      */
+    // URL constructors are deprecated since Java 20; kept for identical URL parsing
+    @SuppressWarnings("deprecation")
     public URL getUrl() throws MalformedURLException {
         String path = this.getPath();
         // Hack to allow entire URL to be provided in host field

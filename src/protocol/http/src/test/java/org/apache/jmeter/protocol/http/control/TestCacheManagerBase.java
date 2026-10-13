@@ -41,6 +41,7 @@ import org.junit.jupiter.api.parallel.ExecutionMode;
 import com.github.benmanes.caffeine.cache.Cache;
 
 @Execution(ExecutionMode.CONCURRENT)
+@SuppressWarnings("deprecation")
 public abstract class TestCacheManagerBase extends JMeterTestCase {
     protected static final String LOCAL_HOST = "http://localhost/";
     protected static final String EXPECTED_ETAG = "0xCAFEBABEDEADBEEF";

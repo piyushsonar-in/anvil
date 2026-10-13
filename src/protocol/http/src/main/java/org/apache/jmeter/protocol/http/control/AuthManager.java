@@ -222,6 +222,8 @@ public class AuthManager extends ConfigTestElement implements TestStateListener,
         return auth.toBasicHeader();
     }
 
+    // URL constructors are deprecated since Java 20; kept for identical URL parsing
+    @SuppressWarnings("deprecation")
     public Authorization getAuthForURL(URL url) {
         if (!isSupportedProtocol(url)) {
             return null;

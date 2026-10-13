@@ -32,6 +32,7 @@ import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.samplers.SampleSaveConfiguration;
 import org.junit.jupiter.api.Test;
 
+@SuppressWarnings("deprecation")
 public class TestCSVSaveService extends JMeterTestCase {
 
     private static void checkSplitString(String input, char delim, String[] expected) throws Exception {
