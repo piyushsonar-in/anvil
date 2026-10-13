@@ -20,7 +20,7 @@ rem   ===============================================================
 rem   Environment variables
 rem   SERVER_PORT (optional) - define the rmiregistry and server port
 rem
-rem   JVM_ARGS - Java flags - these are handled by jmeter.bat
+rem   JVM_ARGS - Java flags - these are handled by anvil.bat
 rem
 rem   ===============================================================
 
@@ -59,12 +59,12 @@ set JMETER_CMD_LINE_ARGS=%*
 
 if not "%SERVER_PORT%" == "" goto port
 
-call jmeter -s -j jmeter-server.log %JMETER_CMD_LINE_ARGS%
+call anvil -s -j jmeter-server.log %JMETER_CMD_LINE_ARGS%
 goto end
 
 
 :port
-call jmeter -Dserver_port=%SERVER_PORT% -s -j jmeter-server.log %JMETER_CMD_LINE_ARGS%
+call anvil -Dserver_port=%SERVER_PORT% -s -j jmeter-server.log %JMETER_CMD_LINE_ARGS%
 
 :end
 

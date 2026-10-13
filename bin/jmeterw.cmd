@@ -18,10 +18,10 @@ rem
 
 rem   Run JMeter using javaw
 
-set JM_START=start "Apache_JMeter"
+set JM_START=start "Anvil"
 set JM_LAUNCH=javaw.exe
 
-call jmeter %*
+call "%~dp0anvil" %*
 
 set JM_START=
 set JM_LAUNCH=
