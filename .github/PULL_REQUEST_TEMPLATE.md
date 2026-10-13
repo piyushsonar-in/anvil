@@ -22,6 +22,7 @@
 ## Checklist:
 <!--- Go over all the following points, and put an `x` in all the boxes that apply. -->
 <!--- If you're unsure about any of these, don't hesitate to ask. We're here to help! -->
+- [ ] No code copied from breaktest (see the [clean-room rule](https://github.com/piyushsonar-in/anvil/blob/master/CONTRIBUTING.md#clean-room-rule)).
 - [ ] My code follows the [code style][style-guide] of this project.
 - [ ] I have updated the documentation accordingly.
 
