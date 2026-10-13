@@ -7,6 +7,7 @@ on:
   pull_request:
     branches:
       - '*'
+  workflow_dispatch:
 
 # https://help.github.com/en/actions/automating-your-workflow-with-github-actions/software-installed-on-github-hosted-runners
 
@@ -88,6 +89,27 @@ jobs:
       env:
         _JAVA_OPTIONS: ${{ matrix.extraJvmArgs }}
         DEVELOCITY_ACCESS_KEY: ${{ secrets.DEVELOCITY_ACCESS_KEY }}
+
+  launcher-old-java:
+    name: 'Launcher rejects Java 17'
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v7
+    - name: 'Set up JDK 17'
+      uses: actions/setup-java@v6
+      with:
+        java-version: 17
+        distribution: 'zulu'
+    - name: Run bin/anvil and bin/jmeter on Java 17
+      run: |
+        for launcher in bin/anvil bin/jmeter; do
+          if output=$("$launcher" --version 2>&1); then
+            echo "$launcher started on Java 17, expected a version error"
+            exit 1
+          fi
+          echo "$output"
+          echo "$output" | grep -F "Anvil needs Java 21 or newer, found 17"
+        done
 
   errorprone:
     name: 'Error Prone (JDK 21)'

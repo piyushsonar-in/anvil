@@ -1,0 +1,113 @@
+name: Upstream sync
+
+# Opens (or refreshes) a "Sync upstream/master" PR every Monday.
+# The job only pushes the bot-owned sync/upstream-master branch; master changes only when the PR is merged.
+#
+# Secret UPSTREAM_SYNC_TOKEN (fine-grained PAT: contents, pull requests and workflows: write) is recommended:
+# GITHUB_TOKEN cannot push upstream commits that touch .github/workflows, and PRs it opens do not trigger CI.
+
+on:
+  schedule:
+    # Monday 06:00 UTC
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: upstream-sync
+  cancel-in-progress: false
+
+env:
+  UPSTREAM_REPO: https://github.com/apache/jmeter.git
+  UPSTREAM_BRANCH: master
+  BASE_BRANCH: master
+  SYNC_BRANCH: sync/upstream-master
+
+jobs:
+  sync:
+    name: Sync upstream/master
+    if: github.repository == 'piyushsonar-in/anvil'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ env.BASE_BRANCH }}
+          fetch-depth: 0
+          token: ${{ secrets.UPSTREAM_SYNC_TOKEN || github.token }}
+      - name: Fetch upstream
+        run: |
+          git remote add upstream "$UPSTREAM_REPO"
+          git fetch --no-tags upstream "$UPSTREAM_BRANCH"
+      - name: Compare with upstream
+        id: compare
+        run: |
+          base="origin/$BASE_BRANCH"
+          upstream="upstream/$UPSTREAM_BRANCH"
+          behind=$(git rev-list --count "$base..$upstream")
+          echo "behind=$behind" >> "$GITHUB_OUTPUT"
+          if [ "$behind" = 0 ]; then
+            echo "$BASE_BRANCH already contains $upstream"
+            exit 0
+          fi
+          # Trial merge without touching the work tree; exit code 1 means conflicts
+          set +e
+          git merge-tree --write-tree --name-only --no-messages "$base" "$upstream" > merge-tree.txt
+          status=$?
+          set -e
+          if [ "$status" -gt 1 ]; then
+            echo "git merge-tree failed with status $status"
+            exit "$status"
+          fi
+          {
+            echo "Merges $behind new commit(s) from [apache/jmeter@$UPSTREAM_BRANCH](https://github.com/apache/jmeter/commits/$UPSTREAM_BRANCH) into \`$BASE_BRANCH\`."
+            echo
+            echo "Upstream head: apache/jmeter@$(git rev-parse --short "$upstream")"
+            echo
+            if [ "$status" = 1 ]; then
+              echo "### Conflicts"
+              echo
+              echo "Resolve these on a local branch, then push to \`$SYNC_BRANCH\`:"
+              echo
+              tail -n +2 merge-tree.txt | sed 's/^/- `/; s/$/`/'
+            else
+              echo "### Conflicts"
+              echo
+              echo "None. The PR merges cleanly."
+            fi
+            echo
+            echo "### Commits"
+            echo
+            git log --no-merges --format='- %s (apache/jmeter@%h)' "$base..$upstream" | head -n 100
+            if [ "$behind" -gt 100 ]; then
+              echo "- ... and more"
+            fi
+            echo
+            echo "Merge with a merge commit, not squash, so the next sync starts from this point."
+          } > pr-body.md
+          cat pr-body.md
+      - name: Push sync branch and open PR
+        if: steps.compare.outputs.behind != '0'
+        env:
+          GH_TOKEN: ${{ secrets.UPSTREAM_SYNC_TOKEN || github.token }}
+        run: |
+          upstream="refs/remotes/upstream/$UPSTREAM_BRANCH"
+          if git fetch --no-tags origin "$SYNC_BRANCH" 2>/dev/null \
+              && [ -n "$(git rev-list "$upstream..FETCH_HEAD")" ]; then
+            # Someone pushed conflict resolutions to the sync branch: keep them
+            echo "$SYNC_BRANCH has commits that are not in upstream, leaving it unchanged"
+            printf '\n> %s has manual commits, so this run did not move it to the latest upstream head.\n' "\`$SYNC_BRANCH\`" >> pr-body.md
+          else
+            # The sync branch is owned by this job, so it is reset to the upstream head
+            git push --force origin "$upstream:refs/heads/$SYNC_BRANCH"
+          fi
+          pr=$(gh pr list --head "$SYNC_BRANCH" --base "$BASE_BRANCH" --state open --json number --jq '.[0].number')
+          if [ -n "$pr" ]; then
+            gh pr edit "$pr" --body-file pr-body.md
+            echo "Updated PR #$pr"
+          else
+            gh pr create --head "$SYNC_BRANCH" --base "$BASE_BRANCH" \
+              --title "Sync upstream/master" --body-file pr-body.md
+          fi
