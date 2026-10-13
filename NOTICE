@@ -1,5 +1,15 @@
+Anvil
+Copyright 2026 The Anvil contributors
+
+Anvil is based on Apache JMeter (https://jmeter.apache.org/).
+
 Apache JMeter
 Copyright 1998-2024 The Apache Software Foundation
 
 This product includes software developed at
 The Apache Software Foundation (http://www.apache.org/).
+
+Anvil is not affiliated with, endorsed by, or sponsored by
+The Apache Software Foundation. "Apache", "Apache JMeter" and "JMeter"
+are trademarks of The Apache Software Foundation and are used here only
+to describe where the code comes from.

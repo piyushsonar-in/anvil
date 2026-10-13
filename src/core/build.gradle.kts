@@ -131,7 +131,11 @@ val generatedVersionDir = layout.buildDirectory.dir("generated/sources/version")
 val versionClass by tasks.registering(Sync::class) {
     val lastEditYear: String by rootProject.extra
     val displayVersion: String by rootProject.extra
+    val anvilVersion: String by rootProject.extra
+    val jmeterBaseVersion: String by rootProject.extra
     inputs.property("@VERSION@", displayVersion)
+    inputs.property("@ANVIL_VERSION@", anvilVersion)
+    inputs.property("@JMETER_BASE_VERSION@", jmeterBaseVersion)
     inputs.property("@YEAR@", lastEditYear)
     outputs.dir(generatedVersionDir)
 
@@ -139,6 +143,8 @@ val versionClass by tasks.registering(Sync::class) {
         include("**/*.java")
         filter { x: String ->
             x.replace("@VERSION@", displayVersion)
+                .replace("@ANVIL_VERSION@", anvilVersion)
+                .replace("@JMETER_BASE_VERSION@", jmeterBaseVersion)
                 .replace("@YEAR@", lastEditYear)
         }
     }
@@ -181,12 +187,6 @@ tasks.withType<AutostyleTask>().configureEach {
     mustRunAfter(versionClass)
 }
 // </editor-fold>
-
-tasks.jar {
-    into("org/apache/jmeter/images") {
-        from("$rootDir/xdocs/images/logo.svg")
-    }
-}
 
 // Checks the generated JAR for a Log4j plugin cache file.
 tasks.jar {

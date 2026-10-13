@@ -1,20 +1,28 @@
-<h1 align="center"><img src="https://jmeter.apache.org/images/logo.svg" alt="Apache JMeter logo" /></h1>
+<h1 align="center"><img src="xdocs/images/anvil_square.png" alt="Anvil logo" width="96" /><br/>Anvil</h1>
 
-An Open Source Java application designed to measure performance and load test applications.
+An open source Java application for load testing and measuring performance, based on Apache JMeter.
 
-By The Apache Software Foundation
-
-[![Build Status](https://api.travis-ci.com/apache/jmeter.svg?branch=master)](https://travis-ci.com/apache/jmeter/)
-[![codecov](https://codecov.io/gh/apache/jmeter/branch/master/graph/badge.svg)](https://codecov.io/gh/apache/jmeter)
+[![CI](https://github.com/piyushsonar-in/anvil/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/piyushsonar-in/anvil/actions/workflows/main.yml)
 [![License](https://img.shields.io/:license-apache-brightgreen.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
-[![Stack Overflow](https://img.shields.io/:stack%20overflow-jmeter-brightgreen.svg)](https://stackoverflow.com/questions/tagged/jmeter)
-[![Maven Central](https://img.shields.io/maven-central/v/org.apache.jmeter/ApacheJMeter.svg?label=Maven%20Central)](https://search.maven.org/artifact/org.apache.jmeter/ApacheJMeter)
-[![Javadocs](https://www.javadoc.io/badge/org.apache.jmeter/ApacheJMeter_core.svg)](https://www.javadoc.io/doc/org.apache.jmeter/ApacheJMeter_core)
-[![Twitter](https://img.shields.io/twitter/url/https/github.com/apache/jmeter.svg?style=social)](https://twitter.com/intent/tweet?text=Powerful%20load%20testing%20with%20Apache%20JMeter:&url=https://jmeter.apache.org)
+
+## Relationship to Apache JMeter
+
+Anvil is a fork of [Apache JMeter](https://jmeter.apache.org/) 6.0.0. It keeps JMeter's engine,
+test plan format and plugin API, and changes the product around them.
+
+- Existing `.jmx` plans, JTL and CSV results, `jmeter.properties` and `user.properties` work unchanged.
+- Java packages stay `org.apache.jmeter.*`, so `lib/ext` plugins and JSR223 scripts keep working.
+- The command line flags are the same. Use `bin/anvil` (or `bin\anvil.bat`) instead of `bin/jmeter`;
+  the old launchers still work and print a one-line notice.
+- New settings use the `anvil.*` prefix. Existing `jmeter.*` keys are still read.
+- Upstream changes are merged every week through a "Sync upstream/master" pull request.
+
+Anvil is not affiliated with, endorsed by, or sponsored by the Apache Software Foundation.
+"Apache JMeter" is used only to say where the code comes from. See [NOTICE](NOTICE).
 
 ## What Is It?
 
-Apache JMeter can measure performance and load test static and dynamic web applications.
+Anvil can measure performance and load test static and dynamic web applications.
 
 It can be used to simulate a heavy load on a server, group of servers,
 network or object to test its strength or to analyze overall performance under different load types.
@@ -83,17 +91,16 @@ Easy correlation through ability to extract data from most popular response form
 
 ## The Latest Version
 
-Details of the latest version can be found on the
-[JMeter Apache Project web site](https://jmeter.apache.org/)
+Releases are published on [GitHub](https://github.com/piyushsonar-in/anvil/releases).
 
 ## Requirements
 
-The following requirements exist for running Apache JMeter:
+The following requirements exist for running Anvil:
 
 - Java Interpreter:
 
-  A fully compliant Java 17 Runtime Environment is required
-  for Apache JMeter to execute. A JDK with `keytool` utility is better suited
+  A fully compliant Java 21 (or newer) Runtime Environment is required
+  for Anvil to execute. A JDK with `keytool` utility is better suited
   for Recording HTTPS websites.
 
 - Optional jars:
@@ -119,10 +126,10 @@ The following requirements exist for running Apache JMeter:
 
   Unpack the binary archive into a suitable directory structure.
 
-## Running JMeter
+## Running Anvil
 
 1. Change to the `bin` directory
-2. Run the `jmeter` (Un\*x) or `jmeter.bat` (Windows) file.
+2. Run the `anvil` (Un\*x) or `anvil.bat` (Windows) file.
 
 ### Windows
 
@@ -179,8 +186,7 @@ JMeter is built using Gradle, and it uses [Gradle's Toolchains for JVM projects]
 for provisioning JDKs. It means the code would search for the needed JDKs locally, or download them
 if they are not found.
 
-By default, the code would use JDK 17 for build purposes, however it would set the target release to 8,
-so the resulting artifacts would be compatible with Java 8.
+By default, the code uses JDK 21 for building and compiles with `--release 21`.
 
 The following command builds and tests JMeter:
 
@@ -206,7 +212,7 @@ If the system does not have a GUI display then:
 The output artifacts (jars, reports) are placed in the `build` folder.
 For instance, binary artifacts can be found under `src/dist/build/distributions`.
 
-The following command would compile the application and enable you to run `jmeter`
+The following command would compile the application and enable you to run `anvil`
 from the `bin` directory.
 
 > **Note** that it completely refreshes `lib/` contents,
@@ -231,8 +237,8 @@ building JMeter with Gradle is available in [gradle.md](gradle.md).
 
 The code can be obtained from:
 
-- https://github.com/apache/jmeter
-- https://gitbox.apache.org/repos/asf/jmeter.git
+- https://github.com/piyushsonar-in/anvil
+- Upstream Apache JMeter: https://github.com/apache/jmeter
 
 ## Licensing and Legal Information
 
@@ -279,7 +285,7 @@ Apache JMeter does not include any implementation of JSSE or JCE.
 
 ## Thanks
 
-**Thank you for using Apache JMeter.**
+**Thank you for using Anvil, and thanks to the Apache JMeter community for the code it builds on.**
 
 ### Third party notices
 

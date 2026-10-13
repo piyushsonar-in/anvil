@@ -1155,6 +1155,24 @@ public class JMeterUtils implements UnitTestManager {
     }
 
     /**
+     * Gets the Anvil product version shown to users.
+     *
+     * @return the Anvil version string, for example {@code 0.1.0}
+     */
+    public static String getAnvilVersion() {
+        return JMeterVersion.getAnvilVersion();
+    }
+
+    /**
+     * Gets the upstream Apache JMeter release this build is based on.
+     *
+     * @return the JMeter release, for example {@code 6.0.0}
+     */
+    public static String getJMeterBaseVersion() {
+        return JMeterVersion.getJMeterBaseVersion();
+    }
+
+    /**
      * Gets the JMeter copyright.
      *
      * @return the JMeter copyright string

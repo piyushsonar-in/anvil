@@ -120,11 +120,7 @@ public class MainFrame extends JFrame implements TestStateListener, Remoteable, 
     public static final String LOCAL = "*local*"; // $NON-NLS-1$
 
     // The application name
-    private static final String DEFAULT_APP_NAME = "Apache JMeter"; // $NON-NLS-1$
-
-    // The default title for the Menu bar
-    private static final String DEFAULT_TITLE = DEFAULT_APP_NAME +
-            " (" + JMeterUtils.getJMeterVersion() + ")"; // $NON-NLS-1$ $NON-NLS-2$
+    private static final String DEFAULT_APP_NAME = "Anvil"; // $NON-NLS-1$
 
     // Allow display/hide LoggerPanel
     private static final boolean DISPLAY_LOGGER_PANEL =
@@ -559,8 +555,8 @@ public class MainFrame extends JFrame implements TestStateListener, Remoteable, 
         addWindowListener(new WindowHappenings());
         // Building is complete, register as listener
         GuiPackage.getInstance().registerAsListener();
-        setTitle(DEFAULT_TITLE);
-        setIconImage(JMeterUtils.getImage("icon-apache.png").getImage());// $NON-NLS-1$
+        setTitle(frameTitle(null));
+        setIconImage(JMeterUtils.getImage("anvil-icon.png").getImage());// $NON-NLS-1$
         setWindowTitle(); // define AWT WM_CLASS string
         refreshErrorsTimer.start();
     }
@@ -574,16 +570,24 @@ public class MainFrame extends JFrame implements TestStateListener, Remoteable, 
     }
 
     public void setExtendedFrameTitle(String fname) {
-        // file New operation may set to null, so just return app name
-        if (fname == null) {
-            setTitle(DEFAULT_TITLE);
-            return;
-        }
+        setTitle(frameTitle(fname));
+    }
 
+    /**
+     * Builds the window title, for example {@code Anvil · plan.jmx}.
+     *
+     * @param fname test plan path, or {@code null} for a new, unsaved plan
+     * @return the window title
+     */
+    static String frameTitle(String fname) {
+        // file New operation may set to null, so just return app name
+        if (fname == null || fname.isEmpty()) {
+            return DEFAULT_APP_NAME;
+        }
         // allow for windows / chars in filename
         String temp = fname.replace('\\', '/'); // $NON-NLS-1$ // $NON-NLS-2$
         String simpleName = temp.substring(temp.lastIndexOf('/') + 1);// $NON-NLS-1$
-        setTitle(simpleName + " (" + fname + ") - " + DEFAULT_TITLE); // $NON-NLS-1$ // $NON-NLS-2$
+        return DEFAULT_APP_NAME + " · " + simpleName; // $NON-NLS-1$
     }
 
     /**

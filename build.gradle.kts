@@ -86,7 +86,12 @@ val displayVersion by extra {
         }
 }
 
-println("Building JMeter $version")
+val anvilVersion by extra("anvil".v + releaseParams.snapshotSuffix)
+
+// Upstream JMeter release the Anvil build is based on, without snapshot suffix
+val jmeterBaseVersion by extra("jmeter".v)
+
+println("Building Anvil $anvilVersion (based on JMeter $version)")
 
 fun reportsForHumans() = !(System.getenv()["CI"]?.toBoolean() ?: boolProp("CI") ?: false)
 

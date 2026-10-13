@@ -20,13 +20,19 @@ plugins {
 }
 
 val lastEditYear: String by rootProject.extra
+val anvilVersion: String by rootProject.extra
+val jmeterBaseVersion: String by rootProject.extra
 
 tasks.withType<ProcessResources>().configureEach {
     val version = rootProject.version.toString()
     inputs.property("@VERSION@", version)
+    inputs.property("@ANVIL_VERSION@", anvilVersion)
+    inputs.property("@JMETER_BASE_VERSION@", jmeterBaseVersion)
     inputs.property("@YEAR@", lastEditYear)
     filter { x: String ->
         x.replace("@VERSION@", version)
+            .replace("@ANVIL_VERSION@", anvilVersion)
+            .replace("@JMETER_BASE_VERSION@", jmeterBaseVersion)
             .replace("@YEAR@", lastEditYear)
     }
 }

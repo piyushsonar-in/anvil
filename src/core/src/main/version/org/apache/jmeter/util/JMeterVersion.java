@@ -30,6 +30,14 @@ public final class JMeterVersion {
         return "@VERSION@";
     }
 
+    static String getAnvilVersion() {
+        return "@ANVIL_VERSION@";
+    }
+
+    static String getJMeterBaseVersion() {
+        return "@JMETER_BASE_VERSION@";
+    }
+
     public static String getCopyRight() {
         return "Copyright (c) 1998-@YEAR@ The Apache Software Foundation";
     }
