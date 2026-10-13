@@ -36,6 +36,14 @@ Branch `feat/m0-foundation` from `origin/master` (`762310f401`). Plan: `anvil-pl
 - [x] `.github/PULL_REQUEST_TEMPLATE.md` checkbox "No code copied from breaktest"
 - [x] TASKS.ai.md mirrors the plan
 
+## 5. License (added during M0)
+
+- [x] Anvil Community Source License 1.0 in `LICENSE`; Apache text in `LICENSE-APACHE-2.0`
+- [x] CLA, CONTRIBUTING section, PR checkbox
+- [x] Autostyle enforces Anvil header for `config/anvil-licensed-files.txt`, ASF header elsewhere; RAT skips Anvil files
+- [x] Jars and dist zips ship both licenses
+- [ ] Legal review of LICENSE and CLA
+
 ## Verify
 
 - [ ] `gradlew.bat build` green

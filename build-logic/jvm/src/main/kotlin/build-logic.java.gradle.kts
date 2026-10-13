@@ -149,11 +149,18 @@ afterEvaluate {
             into("META-INF") {
                 filteringCharset = "UTF-8"
                 duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+                // Anvil Community Source License for Anvil material
+                textFrom("$rootDir/LICENSE")
+                textFrom("$rootDir/NOTICE")
+            }
+            into("META-INF") {
+                filteringCharset = "UTF-8"
+                duplicatesStrategy = DuplicatesStrategy.EXCLUDE
                 // Note: we need "generic Apache-2.0" text without third-party items
                 // So we use the text from $rootDir/config/ since source distribution
-                // contains altered text at $rootDir/LICENSE
+                // contains altered text at $rootDir/LICENSE-APACHE-2.0
                 textFrom("$rootDir/config/LICENSE")
-                textFrom("$rootDir/NOTICE")
+                rename("LICENSE", "LICENSE-APACHE-2.0")
             }
         }
     }
@@ -161,7 +168,7 @@ afterEvaluate {
 
 tasks.configureEach<Jar> {
     manifest {
-        attributes["Bundle-License"] = "Apache-2.0"
+        attributes["Bundle-License"] = "LicenseRef-Anvil-Community-1.0 AND Apache-2.0"
         attributes["Specification-Title"] = "Apache JMeter"
         attributes["Specification-Vendor"] = "Apache Software Foundation"
         attributes["Implementation-Vendor"] = "Apache Software Foundation"

@@ -1,13 +1,13 @@
 <h1 align="center"><img src="xdocs/images/anvil_square.png" alt="Anvil logo" width="96" /><br/>Anvil</h1>
 
-An open source Java application for load testing and measuring performance, based on Apache JMeter.
+A source-available Java application for load testing and measuring performance, based on Apache JMeter.
 
 [![CI](https://github.com/piyushsonar-in/anvil/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/piyushsonar-in/anvil/actions/workflows/main.yml)
-[![License](https://img.shields.io/:license-apache-brightgreen.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
+[![License](https://img.shields.io/badge/license-Anvil%20Community%20Source%201.0-blue.svg)](LICENSE)
 
 ## Relationship to Apache JMeter
 
-Anvil is a fork of [Apache JMeter](https://jmeter.apache.org/) 6.0.0. It keeps JMeter's engine,
+Anvil is a fork of [Apache JMeter](https://jmeter.apache.org/) 6.0.0 with its own [license](#licensing-and-legal-information). It keeps JMeter's engine,
 test plan format and plugin API, and changes the product around them.
 
 - Existing `.jmx` plans, JTL and CSV results, `jmeter.properties` and `user.properties` work unchanged.
@@ -242,10 +242,19 @@ The code can be obtained from:
 
 ## Licensing and Legal Information
 
-For legal and licensing information, please see the following files:
+Anvil is source-available, not open source. Anvil's own code is licensed under the
+[Anvil Community Source License 1.0](LICENSE): you may use and modify it to test systems
+you own or are authorized to test, including paid testing for clients, but you may not
+redistribute it, offer it as a service, or reuse it in another product without a written
+license. Commercial licenses: admin@piyushsonar.in.
 
-- [LICENSE](LICENSE)
+The Apache JMeter code Anvil is based on stays under the Apache License, Version 2.0.
+Files with the Apache Software Foundation header are under that license.
+
+- [LICENSE](LICENSE) - Anvil Community Source License 1.0
+- [LICENSE-APACHE-2.0](LICENSE-APACHE-2.0) - Apache License, Version 2.0, for the Apache JMeter code
 - [NOTICE](NOTICE)
+- [CONTRIBUTOR_LICENSE_AGREEMENT.md](CONTRIBUTOR_LICENSE_AGREEMENT.md)
 
 ## Cryptographic Software Notice
 

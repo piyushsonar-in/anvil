@@ -482,7 +482,18 @@ fun CopySpec.excludeLicenseFromSourceRelease() {
     // It is populated by "dependencyLicenses" above,
     // so we ignore the folder when building source releases
     exclude("licenses/**")
-    exclude("LICENSE")
+    exclude("LICENSE-APACHE-2.0")
+}
+
+// The generated Apache-2.0 + third-party license is shipped next to the Anvil LICENSE
+fun CopySpec.licensesWithApacheAsSeparateFile(licenses: Configuration) {
+    from(files(licenses)) {
+        exclude("LICENSE")
+    }
+    from(files(licenses)) {
+        include("LICENSE")
+        rename { "LICENSE-APACHE-2.0" }
+    }
 }
 
 fun CrLfSpec.binaryLayout() = copySpec {
@@ -491,11 +502,12 @@ fun CrLfSpec.binaryLayout() = copySpec {
         // Note: license content is taken from "/build/..", so gitignore should not be used
         // Note: this is a "license + third-party licenses", not just Apache-2.0
         // Note: files(...) adds both "files" and "dependency"
-        from(files(binLicense))
+        licensesWithApacheAsSeparateFile(binLicense)
         from(rootDir) {
             gitignore(gitProps)
             exclude("bin/testfiles")
             exclude("bin/rmi_keystore.jks")
+            include("LICENSE")
             include("bin/**")
             include("lib/ext/**")
             include("lib/junit/**")
@@ -531,7 +543,7 @@ fun CrLfSpec.sourceLayout() = copySpec {
         // Note: license content is taken from "/build/..", so gitignore should not be used
         // Note: this is a "license + third-party licenses", not just Apache-2.0
         // Note: files(...) adds both "files" and "dependency"
-        from(files(srcLicense))
+        licensesWithApacheAsSeparateFile(srcLicense)
         // Include all the source files
         from(rootDir) {
             gitignore(gitProps)

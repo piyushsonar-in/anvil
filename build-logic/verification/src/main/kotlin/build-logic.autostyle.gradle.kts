@@ -26,9 +26,30 @@ plugins {
 val isActualPluginApplication =
     rootProject.name.startsWith("jmeter")
 
-fun com.github.autostyle.gradle.BaseFormatExtension.license() {
+// Files written for Anvil carry the Anvil header instead of the Apache one
+val anvilLicensedFiles =
     if (isActualPluginApplication) {
-        licenseHeader(rootProject.ide.licenseHeader) {
+        rootDir.resolve("config/anvil-licensed-files.txt").readLines()
+            .map { it.trim() }
+            .filter { it.isNotEmpty() && !it.startsWith("#") }
+    } else {
+        listOf()
+    }
+
+val anvilLicenseHeader = """
+    Copyright (c) 2026 Piyush Sonar
+    SPDX-License-Identifier: LicenseRef-Anvil-Community-1.0
+
+    This file is part of Anvil and is licensed under the Anvil Community
+    Source License 1.0. See LICENSE in the project root.
+""".trimIndent()
+
+fun com.github.autostyle.gradle.BaseFormatExtension.license(anvilHeader: Boolean = false) {
+    if (isActualPluginApplication) {
+        if (!anvilHeader) {
+            filter { exclude(anvilLicensedFiles) }
+        }
+        licenseHeader(if (anvilHeader) anvilLicenseHeader else rootProject.ide.licenseHeader) {
             copyrightStyle("bat", com.github.autostyle.generic.DefaultCopyrightStyle.REM)
             copyrightStyle("cmd", com.github.autostyle.generic.DefaultCopyrightStyle.REM)
             addBlankLineAfter.set(true)
@@ -65,6 +86,16 @@ autostyle {
             }
         }
         license()
+    }
+    if (anvilLicensedFiles.isNotEmpty()) {
+        format("anvilLicense") {
+            filter {
+                include(anvilLicensedFiles)
+                // bin/ holds IDE output in subprojects
+                exclude("**/build/**", "bin/**", ".gradle/**", "node_modules")
+            }
+            license(anvilHeader = true)
+        }
     }
     format("markdown") {
         filter {
